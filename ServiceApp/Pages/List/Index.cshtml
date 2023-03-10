@@ -1,0 +1,53 @@
+﻿@page
+@model ServiceApp.Pages.List.IndexModel
+@{
+}
+<h1>Service Manager</h1>
+<form method="get">
+    <div class="d-flex">
+        <p class="me-5">Room</p>
+        <input type="text" name="room" value="@Model.RoomSearch" />
+    </div>
+    <div>
+        <button type="submit" class="btn btn-secondary">Search</button>
+    </div>
+</form>
+<h3>List of service count: @Model.services.Count</h3>
+<form method="post" enctype='multipart/form-data'>
+    <div class="d-flex">
+        <input type="file" name="inputfile" />
+        <button type="submit" class="btn btn-secondary">Search</button>
+    </div>
+</form>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>RoomTitle</th>
+            <th>FeeType</th>
+            <th>Month</th>
+            <th>Year</th>
+            <th>Amount</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var service in Model.services)
+        {
+            <tr>
+                <td>@service.RoomTitle</td>
+                <td>@service.FeeType</td>
+                <td>@service.Month</td>
+                <td>@service.Year</td>
+                <td>@service.Amount</td>
+                @if (service.Employee == null)
+                {
+                    <td>Unpaid</td>
+                }
+                else
+                {
+                    <td>Paid : @service.EmployeeNavigation.Name</td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
